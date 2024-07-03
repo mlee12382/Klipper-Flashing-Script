@@ -79,10 +79,33 @@
 			```
 		
 		* Here you can see examples for my Raspberry Pi, Octopus Max EZ running USB to CAN Bridge, and SB2209 toolhead board. 
-		* ![Example of formatting](/FlashExample01.jpg)
 		
-		* 
+		* Once you have all of your devices set up similar to the examples, then you will call each of the device functions created above like so:
+			```
+			echo -e "\033[1;34m\nStopping Klipper service.\033[0m"
+			sudo service klipper stop
+			sleep 5
+			rpi_flash
+			sleep 5
+			octopus_flash
+			sleep 5
+			sb2209_flash
+			sleep 5
+			echo -e "\033[1;34m\nStarting Klipper service.\033[0m"
+			sudo service klipper start
+			``` 
 
+		* The `sleep 5`will cause the script to pause for 5 seconds between each step to help keep things running smoothly.
+		
+		* You will then need to save and exit and make the script executable.
+			```
+			sudo chmod +x ~/printer_data/config/flash.sh
+			```
+		* You should then be able run the script for testing.
+		
+		![Example of formatting](/FlashExample01.jpg)
+		
+		
 
 # CANBus Devices
 * This is the easiest setup for the script.
@@ -96,3 +119,14 @@
 * Other CANBus devices can be flashed as described in the Esoterical guide.
 	* In my case I have a BTT SB2209 and an ERCF CANBus board, here is the SB2209 flash command from my script.
 		* ```python3 ~/Katapult/scripts/flash_can.py -f ~/klipper/sb2209_klipper.bin -u 2730ee34bdd2```
+
+# USB Devices
+* If you are running USB then you will need to trigger entering the bootloader so that you can flash the device. If you have an open GPIO pin on the device and your Pi then you can configure Katapult to enter the bootloader on a gpio trigger. 
+
+* You will also need to have a relay or other power device to toggle the printer power for this to work correctly.
+
+* Below is an image of my Katapult settings for an Octopus v1.1 F446 board using the PS_ON pin (PE11) to trigger the bootloader. It is connected to the Pi GPIO on pin 21
+
+ ![Katapult Settings Example](/KatapultGPIO.jpg)
+
+# Power Devices
