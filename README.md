@@ -15,6 +15,8 @@
 * You will need to do extensive modifications and some preliminary setup to make this work for your specific hardware. The examples provided are my personal scripts and are only meant as references.
 
 # Getting Started
+* You can check out my example scripts here: [CANBus](/CANBus_Flash_Example.sh) & [USB](/USB_Flash_Example.sh). There will be excerpts from them below in the instructions.  
+
 *	SSH into your Klipper host.
 	
 	* Set up each of your devices that will need to be flashed with a config file to easily call them up with the script:
@@ -34,7 +36,7 @@
 
 		* The -j4 tag uses all 4 of the processing cores on the Raspberry Pi so it can theoretically finish faster.
 
-* Create the script, you can theoretically put it anywhere on the Pi that you want, I put it in my config folder so that if I change it, it's automatically backed up to github with the [klipper-backup](https://github.com/Staubgeborener/klipper-backup) plugin, and I name it flash.sh though you can name it whatever you want also.
+* Create the script, you can theoretically put it anywhere on the Pi that you want, I put it in my config folder so that if I change it, it's automatically backed up to github with the [klipper-backup](https://github.com/Staubgeborener/klipper-backup) plugin, and I name it `flash.sh` though you can name it whatever you want also.
 	```
 	cd ~
 	sudo nano ~/printer_data/config/flash.sh
@@ -75,7 +77,10 @@
 				python3 ~/Katapult/scripts/flash_can.py -f ~/klipper/sb2209_klipper.bin -u 2730ee34bdd2
 			}
 			```
+		
 		* Here you can see examples for my Raspberry Pi, Octopus Max EZ running USB to CAN Bridge, and SB2209 toolhead board. 
+		* ![Example of formatting](/FlashExample01.jpg)
+		
 		* 
 
 
