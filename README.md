@@ -123,9 +123,9 @@
 # USB Devices
 * If you are running USB then you will need to trigger entering the bootloader so that you can flash the device. If you have an open GPIO pin on the device and your Pi then you can configure Katapult to enter the bootloader on a gpio trigger. 
 
-* You will also need to have a relay or other power device to toggle the printer power for this to work correctly.
+* You will also need to have a relay or other power device to toggle the printer power for this to work correctly. Instructions for this are [below](/readme.md#power-devices).
 
-* Below is an image of my Katapult settings for an Octopus v1.1 F446 board using the PS_ON pin to trigger the bootloader. It is connected to the Pi GPIO on pin 21.
+* Below is an image of my Katapult settings for an Octopus v1.1 F446 board using the PS_ON pin (PE11) to trigger the bootloader. It is connected to the Pi GPIO on pin 21.
 
  ![Katapult Settings Example](/KatapultGPIO.jpg)
 
@@ -134,7 +134,7 @@
 	* You should be able to use any unused pin on your board and the Pi, you just need to assign them in the Katapult settings and in your script.
 	* Run a wire between the selected pin on the board and the GPIO pin on the Pi.
 	
-	* You will need to have gpiod installed, which you may already have depending on what you are using for ADXL stuff.	`sudo apt-get install gpiod`
+	* You will need to have gpiod installed, which you may already have depending on what you are using for ADXL stuff.	`sudo apt-get install gpiod`. More information [here](https://www.klipper3d.org/RPi_microcontroller.html#optional-identify-the-correct-gpiochip).
 	
 	* In my example I use `gpioset gpiochip0 21=1` followed by turning on the printer relay which enters the bootloader so I can flash the board, after which I run `gpioset gpiochip0 21=0` followed by cycling the power to return it to normal operations.
 	
