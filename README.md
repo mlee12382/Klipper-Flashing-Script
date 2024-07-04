@@ -123,7 +123,7 @@
 # USB Devices
 * If you are running USB then you will need to trigger entering the bootloader so that you can flash the device. If you have an open GPIO pin on the device and your Pi then you can configure Katapult to enter the bootloader on a gpio trigger. 
 
-* You will also need to have a relay or other power device to toggle the printer power for this to work correctly. Instructions for this are [below](/readme.md#power-devices).
+* You will also need to have a relay or other power device to toggle the printer power for this to work correctly. Instructions for this are [below](#power-devices).
 
 * Below is an image of my Katapult settings for an Octopus v1.1 F446 board using the PS_ON pin (PE11) to trigger the bootloader. It is connected to the Pi GPIO on pin 21.
 
