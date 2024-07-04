@@ -130,6 +130,9 @@
  ![Katapult Settings Example](/KatapultGPIO.jpg)
 
 * Normally you have to double press the reset button to enter the bootloader to flash devices. By using the GPIO pin to enter the bootloader instead you can do it all with a script, the downside is that you need to toggle power while the pin is active to get it to enter the bootloader.
+
+	* You should be able to use any unused pin on your board and the Pi, you just need to assign them in the Katapult settings and in your script.
+	* Run a wire between the selected pin on the board and the GPIO pin on the Pi.
 	
 	* You will need to have gpiod installed, which you may already have depending on what you are using for ADXL stuff.	`sudo apt-get install gpiod`
 	
@@ -137,3 +140,18 @@
 	
 
 # Power Devices
+* For [Moonraker Power Devices](https://moonraker.readthedocs.io/en/latest/configuration/#power)
+
+	* The example below controls 2 relays, one named 'PSU' and the other named 'Printer'. You can have more or even a single relay being controlled. Separate the names of the devices you set up in moonraker.conf using '&'. For an example with more devices see my [CANBus Example](/CANBus_Flash_Example.sh) where I have four relays being controlled. (Technically I only need the 2 in the example below for that printer also, however, I have it turn everything on so that the printer starts and is ready to go at the end of the script.)
+
+	* You can also see in the example that I have it set to cycle the power, turning it off, waiting 5 seconds and then turning it back on. I also have it make sure that the Klipper service is stopped after the power on since one of my printers always restarts the Klipper service when the relay is powered.
+		```
+		power_cycle(){
+			echo -e "\033[1;34m\nCycling power to PSU and boards.\033[0m"
+			curl -s -X POST "http://localhost:7125/machine/device_power/off?PSU&Printer" > /dev/null 2>&1
+			sleep 5
+			curl -s -X POST "http://localhost:7125/machine/device_power/on?PSU&Printer" > /dev/null 2>&1
+			sleep 5
+			sudo service klipper stop
+		}	
+		```
