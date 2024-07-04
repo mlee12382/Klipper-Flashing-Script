@@ -14,7 +14,7 @@ octopus_flash(){
 	make -s KCONFIG_CONFIG=config.octopus -j4  > /dev/null 2>&1
 	mv ~/klipper/out/klipper.bin octopus_klipper.bin
 	echo -e "\033[1;34m\nStep 3: Flashing Klipper to Octopus.\033[0m"
-	python3 ~/CanBoot/scripts/flash_can.py -f ~/klipper/octopus_klipper.bin -d /dev/serial/by-id/usb-katapult_stm32f446xx_21003C000C51303432383339-if00
+	python3 ~/Katapult/scripts/flash_can.py -f ~/klipper/octopus_klipper.bin -d /dev/serial/by-id/usb-katapult_stm32f446xx_21003C000C51303432383339-if00
 }
 
 power_cycle(){
