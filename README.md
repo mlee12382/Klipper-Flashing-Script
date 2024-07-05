@@ -105,6 +105,8 @@
 		
 		![Example of formatting](/FlashExample01.jpg)
 		
+	* If you have any errors in the script it may be beneficial to run each of the commands in the functions separately to make sure everything is entered correctly. You may want to omit the `> /dev/null 2>&1` section from your commands if you used them so you can see what errors if any you are getting while testing.
+		* I used ChatGPT when I was building the script initially to help with troubleshooting and getting the terminal text formatting set the way I wanted it, it's a useful tool for this type of thing if you are having issues, though it's not always correct on current implementations especially for Klipper specific stuff so be wary of trusting it completely. ie the ways it thought you could toggle Moonraker power devices from the terminal were completely wrong, at least when I was setting things up.
 		
 
 # CANBus Devices
@@ -137,6 +139,7 @@
 	* You will need to have gpiod installed, which you may already have depending on what you are using for ADXL stuff.	`sudo apt-get install gpiod`. More information [here](https://www.klipper3d.org/RPi_microcontroller.html#optional-identify-the-correct-gpiochip).
 	
 	* In my example I use `gpioset gpiochip0 21=1` followed by turning on the printer relay which enters the bootloader so I can flash the board, after which I run `gpioset gpiochip0 21=0` followed by cycling the power to return it to normal operations.
+		* If the bootloader has been sucsessfully entered then when you run`ls /dev/serial/by-id/*` you should see a device name that has 'Katapult' in it instead of 'Klipper'.
 	
 
 # Power Devices
