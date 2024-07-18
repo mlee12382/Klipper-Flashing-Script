@@ -185,3 +185,14 @@
 			sudo service klipper stop
 		}	
 		```
+
+	* Adjust your IP and port according to your needs if necessary.
+# Katapult on devices that don't support DFU
+
+* If you have a device that doesn't support DFU for flashing the Katapult bootloader you may be able to do so using an ST-Link adapter and STM32CubeProgrammer.
+
+	* I will not be providing instructions on this since there is a very high chance of making your board completely inoperable if you don't know what you are doing using this method. 
+
+	* I have successfully flashed Katapult using this method to a BTT SKR Mini E3v3 and to an Elegoo Neptune 2 v1.3 board, neither of which support DFU. They are now fully capable of using the scripts detailed above.
+
+	* In my testing with this method I did have to completely erase the flash memory on the MCU before flashing Katapult had positive results, the programmer said it would flash successfully prior to a full wipe but when I plugged it into the Pi to flash Klipper it wasn't showing as having Katapult on it. Doing a wipe before the flash solved this.
