@@ -191,7 +191,7 @@
 
 * If you have a device that doesn't support DFU for flashing the Katapult bootloader you may be able to do so using an ST-Link adapter and STM32CubeProgrammer.
 
-	* I will not be providing instructions on this since there is a very high chance of making your board completely inoperable if you don't know what you are doing using this method. 
+	* I will not be providing instructions on this since there is a very high chance of making your board completely inoperable if you don't know what you are doing when using this method. 
 
 	* I have successfully flashed Katapult using this method to a BTT SKR Mini E3v3 and to an Elegoo Neptune 2 v1.3 board, neither of which support DFU. They are now fully capable of using the scripts detailed above.
 
