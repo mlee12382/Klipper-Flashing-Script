@@ -123,24 +123,51 @@
 		* ```python3 ~/Katapult/scripts/flash_can.py -f ~/klipper/sb2209_klipper.bin -u 2730ee34bdd2```
 
 # USB Devices
-* If you are running USB then you will need to trigger entering the bootloader so that you can flash the device. If you have an open GPIO pin on the device and your Pi then you can configure Katapult to enter the bootloader on a gpio trigger. 
-
-* You will also need to have a relay or other power device to toggle the printer power for this to work correctly. Instructions for this are [below](#power-devices).
-
-* Below is an image of my Katapult settings for an Octopus v1.1 F446 board using the PS_ON pin (PE11) to trigger the bootloader. It is connected to the Pi GPIO on pin 21.
-
- ![Katapult Settings Example](/KatapultGPIO.jpg)
-
-* Normally you have to double press the reset button to enter the bootloader to flash devices. By using the GPIO pin to enter the bootloader instead you can do it all with a script, the downside is that you need to toggle power while the pin is active to get it to enter the bootloader.
-
-	* You should be able to use any unused pin on your board and the Pi, you just need to assign them in the Katapult settings and in your script.
-	* Run a wire between the selected pin on the board and the GPIO pin on the Pi.
+* If you are running USB then you will need to trigger entering the bootloader so that you can flash the device. 
+	* If you have an open GPIO pin on the device and your Pi then you can configure Katapult to enter the bootloader on a GPIO trigger. 
 	
-	* You will need to have gpiod installed, which you may already have depending on what you are using for ADXL stuff.	`sudo apt-get install gpiod`. More information [here](https://www.klipper3d.org/RPi_microcontroller.html#optional-identify-the-correct-gpiochip).
-	
-	* In my example I use `gpioset gpiochip0 21=1` followed by turning on the printer relay which enters the bootloader so I can flash the board, after which I run `gpioset gpiochip0 21=0` followed by cycling the power to return it to normal operations.
-		* If the bootloader has been sucsessfully entered then when you run`ls /dev/serial/by-id/*` you should see a device name that has 'Katapult' in it instead of 'Klipper'.
-	
+		* You will also need to have a relay or other power device to toggle the printer power for this to work correctly. Instructions for this are [below](#power-devices).
+
+		* Below is an image of my Katapult settings for an Octopus v1.1 F446 board using the PS_ON pin (PE11) to trigger the bootloader. It is connected to the Pi GPIO on pin 21.
+
+		 ![Katapult Settings Example](/KatapultGPIO.jpg)
+
+		* Normally you have to double press the reset button to enter the bootloader to flash devices. By using the GPIO pin to enter the bootloader instead you can do it all with a script, the downside is that you need to toggle power while the pin is active to get it to enter the bootloader.
+
+			* You should be able to use any unused pin on your board and the Pi, you just need to assign them in the Katapult settings and in your script.
+			* Run a wire between the selected pin on the board and the GPIO pin on the Pi.
+			
+			* You will need to have gpiod installed, which you may already have depending on what you are using for ADXL stuff.	`sudo apt-get install gpiod`. More information [here](https://www.klipper3d.org/RPi_microcontroller.html#optional-identify-the-correct-gpiochip).
+			
+			* In my example I use `gpioset gpiochip0 21=1` followed by turning on the printer relay which enters the bootloader so I can flash the board, after which I run `gpioset gpiochip0 21=0` followed by cycling the power to return it to normal operations.
+				* If the bootloader has been successfully entered then when you run`ls /dev/serial/by-id/*` you should see a device name that has 'Katapult' in it instead of 'Klipper' (this also depends on the board, some device names don't change, in which case you will know if it's in bootloader mode if it successfully flashes).
+		
+	* You can also simulate a double press of the reset button by connecting the GPIO on your Pi to an available RST pin on your control board if available, some boards have more than one and they're usually all tied together. This method doesn't require power relays.
+		* In the following example I have GPIO 26 connected to the RST pin on the SWDIO port of the board (there is also a RST pin in EXP2 if you're not using a screen). You need to have the 'sleeps' or the toggling is too fast and it doesn't recognize it as a "double press".
+
+			```
+			bootloader_mode{
+				gpioset gpiochip0 26=0
+				sleep 0.1
+				gpioset gpiochip0 26=1
+				sleep 0.2
+				gpioset gpiochip0 26=0
+				sleep 0.1
+				gpioset gpiochip0 26=1
+			}
+			```
+
+		* You would then call the 'bootloader_mode' function just prior to your flashing function. Something similar to the following.
+
+			```
+			echo -e "\033[1;34m\nStopping Klipper service.\033[0m"
+			sudo service klipper stop
+			rpi_flash
+			bootloader_mode
+			octopus_flash
+			echo -e "\033[1;34m\nStarting Klipper service.\033[0m"
+			sudo service klipper start
+			```
 
 # Power Devices
 * For [Moonraker Power Devices](https://moonraker.readthedocs.io/en/latest/configuration/#power)
