@@ -63,9 +63,9 @@
 				make -s KCONFIG_CONFIG=config.octopus -j4  > /dev/null 2>&1
 				mv ~/klipper/out/klipper.bin octopus_klipper.bin
 				echo -e "\033[1;34m\nStep 3: Flashing Klipper to Octopus.\033[0m"
-				python3 ~/Katapult/scripts/flashtool.py -i can0 -u 39c374a93450 -r
+				python3 ~/katapult/scripts/flashtool.py -i can0 -u 39c374a93450 -r
 				sleep 5
-				python3 ~/Katapult/scripts/flash_can.py -f ~/klipper/octopus_klipper.bin -d /dev/serial/by-id/usb-Katapult_stm32h723xx_2A003F001951313236343430-if00
+				python3 ~/katapult/scripts/flash_can.py -f ~/klipper/octopus_klipper.bin -d /dev/serial/by-id/usb-Katapult_stm32h723xx_2A003F001951313236343430-if00
 			}
 			
 			sb2209_flash(){
@@ -74,7 +74,7 @@
 				make -s KCONFIG_CONFIG=config.sb2209 -j4  > /dev/null 2>&1
 				mv ~/klipper/out/klipper.bin sb2209_klipper.bin
 				echo -e "\033[1;34m\nStep 5: Flashing Klipper to SB2209.\033[0m"
-				python3 ~/Katapult/scripts/flash_can.py -f ~/klipper/sb2209_klipper.bin -u 2730ee34bdd2
+				python3 ~/katapult/scripts/flash_can.py -f ~/klipper/sb2209_klipper.bin -u 2730ee34bdd2
 			}
 			```
 		
@@ -114,13 +114,13 @@
 
 * USB to CAN Bridge devices require you to release the UUID and enter the bootloader
 	* In my case, as seen in the example script it is the following line:
-		* ```python3 ~/Katapult/scripts/flashtool.py -i can0 -u 39c374a93450 -r```
+		* ```python3 ~/katapult/scripts/flashtool.py -i can0 -u 39c374a93450 -r```
 	*	The board should now show a /dev/serial/by-id/ path that you can use to flash the updated version of klipper to like so:
-		*	```python3 ~/Katapult/scripts/flash_can.py -f ~/klipper/octopus_klipper.bin -d /dev/serial/by-id/usb-Katapult_stm32h723xx_2A003F001951313236343430-if00```
+		*	```python3 ~/katapult/scripts/flash_can.py -f ~/klipper/octopus_klipper.bin -d /dev/serial/by-id/usb-Katapult_stm32h723xx_2A003F001951313236343430-if00```
 
 * Other CANBus devices can be flashed as described in the Esoterical guide.
 	* In my case I have a BTT SB2209 and an ERCF CANBus board, here is the SB2209 flash command from my script.
-		* ```python3 ~/Katapult/scripts/flash_can.py -f ~/klipper/sb2209_klipper.bin -u 2730ee34bdd2```
+		* ```python3 ~/katapult/scripts/flash_can.py -f ~/klipper/sb2209_klipper.bin -u 2730ee34bdd2```
 
 # USB Devices
 * If you are running USB then you will need to trigger entering the bootloader so that you can flash the device. 
