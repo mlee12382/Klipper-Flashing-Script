@@ -6,13 +6,18 @@
 
 * These instructions are meant to help you create a script that will flash Klipper updates to your devices by running a single command.
 
-* These instructions will only work if your devices supports flashing a Katapult Bootloader.
+* These instructions will only work if your devices support flashing a Katapult Bootloader and / or devices that allow firmware flashing without any physical interaction with the device. 
+* In my experience, devices that are compatible with Katapult and devices that use `make flash` commands, (ie RP2040 devices), are the easiest to automate. It may be possible to do it with other devices also but I am not familiar with other methods so I will be specifically focusing on the former.
+
 
 * Please refer to the [Esoterical CANBus Guide](https://canbus.esoterical.online/) for specifics on setting up Katapult and for device specific settings.
 
 * This will work with both CANBus and USB devices.
 
 * You will need to do extensive modifications and some preliminary setup to make this work for your specific hardware. The examples provided are my personal scripts and are only meant as references.
+
+* The script being created is basically just taking the commands that you would manually enter in the command line interface to flash your devices and compiling them together so that you can run a single command that will then execute all of the commands needed to flash your devices.
+
 
 # Getting Started
 * You can check out my example scripts here: [CANBus](/CANBus_Flash_Example.sh) & [USB](/USB_Flash_Example.sh). There will be excerpts from them below in the instructions.  
@@ -187,6 +192,7 @@
 		```
 
 	* Adjust your IP and port according to your needs if necessary.
+
 # Katapult on devices that don't support DFU
 
 * If you have a device that doesn't support DFU for flashing the Katapult bootloader you may be able to do so using an ST-Link adapter and STM32CubeProgrammer.
