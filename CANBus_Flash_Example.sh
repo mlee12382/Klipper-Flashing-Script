@@ -14,9 +14,9 @@ octopus_flash(){
 	make -s KCONFIG_CONFIG=config.octopus -j4  > /dev/null 2>&1
 	mv ~/klipper/out/klipper.bin octopus_klipper.bin
 	echo -e "\033[1;34m\nStep 3: Flashing Klipper to Octopus.\033[0m"
-	python3 ~/Katapult/scripts/flashtool.py -i can0 -u 39c374a93450 -r
+	python3 ~/katapult/scripts/flashtool.py -i can0 -u 39c374a93450 -r
 	sleep 5
-	python3 ~/Katapult/scripts/flash_can.py -f ~/klipper/octopus_klipper.bin -d /dev/serial/by-id/usb-Katapult_stm32h723xx_2A003F001951313236343430-if00
+	python3 ~/katapult/scripts/flash_can.py -f ~/klipper/octopus_klipper.bin -d /dev/serial/by-id/usb-Katapult_stm32h723xx_2A003F001951313236343430-if00
 }
 
 sb2209_flash(){
@@ -25,7 +25,7 @@ sb2209_flash(){
 	make -s KCONFIG_CONFIG=config.sb2209 -j4  > /dev/null 2>&1
 	mv ~/klipper/out/klipper.bin sb2209_klipper.bin
 	echo -e "\033[1;34m\nStep 5: Flashing Klipper to SB2209.\033[0m"
-	python3 ~/Katapult/scripts/flash_can.py -f ~/klipper/sb2209_klipper.bin -u 2730ee34bdd2
+	python3 ~/katapult/scripts/flash_can.py -f ~/klipper/sb2209_klipper.bin -u 2730ee34bdd2
 }
 
 ercf_flash(){
@@ -34,7 +34,7 @@ ercf_flash(){
 	make -s KCONFIG_CONFIG=config.ercfv1.1 -j4  > /dev/null 2>&1
 	mv ~/klipper/out/klipper.bin ercf_klipper.bin
 	echo -e "\033[1;34m\nStep 7: Flashing Klipper to ERCF.\033[0m"
-	python3 ~/Katapult/scripts/flash_can.py -f ~/klipper/ercf_klipper.bin -u f079bd60e64b
+	python3 ~/katapult/scripts/flash_can.py -f ~/klipper/ercf_klipper.bin -u f079bd60e64b
 }
 
 hotkey_flash(){
@@ -47,7 +47,7 @@ hotkey_flash(){
 
 cartographer_flash(){
 	echo -e "\033[1;34m\nStep 9: Flashing Klipper to Cartographer.\033[0m"
-	python3 ~/Katapult/scripts/flash_can.py -f ~/cartographer-klipper/firmware/v3/Cartographer_CAN_1000000_8kib_offset.bin -u 3de91f25c776
+	python3 ~/katapult/scripts/flash_can.py -f ~/cartographer-klipper/firmware/v3/Cartographer_CAN_1000000_8kib_offset.bin -u 3de91f25c776
 }
 
 power_cycle(){
